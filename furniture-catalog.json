@@ -1,0 +1,545 @@
+{
+  "categories": {
+    "desks": {
+      "displayName": "Desks",
+      "emoji": "🪑",
+      "items": [
+        {
+          "id": "desk1",
+          "name": "Desk 1",
+          "model": "desk1.glb",
+          "thumbnail": "desk1.png",
+          "scale": 4,
+          "isSurface": true,
+          "placeOnSurface": false,
+          "tags": ["desk", "office", "furniture"]
+        },
+        {
+          "id": "desk2", 
+          "name": "Desk 2",
+          "model": "desk2.glb",
+          "thumbnail": "desk2.png",
+          "scale": 4,
+          "isSurface": true,
+          "placeOnSurface": false,
+          "tags": ["desk", "office", "furniture"]
+        },
+        {
+          "id": "standingdesk",
+          "name": "Standing Desk", 
+          "model": "standingdesk.glb",
+          "thumbnail": "standingdesk.png",
+          "scale": 4,
+          "isSurface": true,
+          "placeOnSurface": false,
+          "tags": ["desk", "office", "furniture", "standing"]
+        },
+        {
+          "id": "desk4",
+          "name": "Desk 4",
+          "model": "desk4.glb", 
+          "thumbnail": "desk4.png",
+          "scale": 4,
+          "isSurface": true,
+          "placeOnSurface": false,
+          "tags": ["desk", "office", "furniture", "executive"]
+        },
+        {
+          "id": "desk5",
+          "name": "Desk 5",
+          "model": "desk5.glb",
+          "thumbnail": "desk5.png", 
+          "scale": 4,
+          "isSurface": true,
+          "placeOnSurface": false,
+          "tags": ["desk", "office", "furniture", "corner"]
+        }
+      ]
+    },
+    "chairs": {
+      "displayName": "Chairs",
+      "emoji": "🪑",
+      "items": [
+        {
+          "id": "chair1",
+          "name": "Chair 1",
+          "model": "chair1.glb",
+          "thumbnail": "chair1.png",
+          "scale": 4,
+          "isSurface": true,
+          "placeOnSurface": false,
+          "tags": ["chair", "seating", "office"]
+        },
+        {
+          "id": "chair2",
+          "name": "Chair 2", 
+          "model": "chair2.glb",
+          "thumbnail": "chair2.png",
+          "scale": 4,
+          "isSurface": true,
+          "placeOnSurface": false,
+          "tags": ["chair", "seating", "office", "ergonomic"]
+        },
+        {
+          "id": "chair3",
+          "name": "Chair 3",
+          "model": "chair3.glb",
+          "thumbnail": "chair3.png", 
+          "scale": 4,
+          "isSurface": true,
+          "placeOnSurface": false,
+          "tags": ["chair", "seating", "armchair"]
+        },
+        {
+          "id": "chair4",
+          "name": "Chair 4",
+          "model": "chair4.glb",
+          "thumbnail": "chair4.png",
+          "scale": 4,
+          "isSurface": true,
+          "placeOnSurface": false,
+          "tags": ["chair", "seating", "executive"]
+        }
+      ]
+    },
+    "sofas": {
+      "displayName": "Sofas",
+      "emoji": "🛋️",
+      "items": [
+        {
+          "id": "sofa", 
+          "name": "Sofa",
+          "model": "Sofas/sofa1.glb",
+          "thumbnail": "Sofas/sofa1.png",
+          "fallbackEmoji": "🛋️",
+          "scale": 5,
+          "isSurface": true,
+          "placeOnSurface": false,
+          "tags": ["sofa", "couch", "seating"]
+        }
+      ]
+    },
+    "plants": {
+      "displayName": "Plants",
+      "emoji": "🌿",
+      "items": [
+        {
+          "id": "plant1",
+          "name": "Plant 1",
+          "model": "plant1.glb",
+          "thumbnail": "plant1.png",
+          "scale": 3,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "tags": ["plant", "green", "nature", "indoor"]
+        },
+        {
+          "id": "plant2",
+          "name": "Plant 2",
+          "model": "plant2.glb", 
+          "thumbnail": "plant2.png",
+          "scale": 3,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "tags": ["plant", "green", "nature", "succulent"]
+        },
+        {
+          "id": "plant3",
+          "name": "Plant 3",
+          "model": "plant3.glb",
+          "thumbnail": "plant3.png",
+          "scale": 3,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "tags": ["plant", "green", "nature", "tree", "palm"]
+        },
+        {
+          "id": "plant4",
+          "name": "Plant 4", 
+          "model": "plant4.glb",
+          "thumbnail": "plant4.png",
+          "scale": 3,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "tags": ["plant", "green", "nature", "monstera"]
+        },
+        {
+          "id": "plant5",
+          "name": "Plant 5",
+          "model": "plant5.glb",
+          "thumbnail": "plant5.png",
+          "scale": 3,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "tags": ["plant", "green", "nature", "fern"]
+        },
+        {
+          "id": "cactus",
+          "name": "Cactus",
+          "model": "cactus.glb",
+          "thumbnail": "cactus.png",
+          "scale": 4,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "tags": ["cactus", "plant", "succulent", "desert", "spiky"]
+        }
+      ]
+    },
+    "monitor-stands": {
+      "displayName": "Monitor Stands",
+      "emoji": "📺",
+      "items": [
+        {
+          "id": "monitorstand1",
+          "name": "Monitor Stand 1",
+          "model": "monitorstand1.glb",
+          "thumbnail": "monitorstand1.png",
+          "scale": 3,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "tags": ["monitor", "stand", "support", "riser", "desk", "adjustable"]
+        },
+        {
+          "id": "monitorstand2", 
+          "name": "Monitor Stand 2",
+          "model": "monitorstand2.glb",
+          "thumbnail": "monitorstand2.png",
+          "scale": 3,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "tags": ["monitor", "stand", "support", "riser", "desk", "ergonomic"]
+        }
+      ]
+    },
+    "electronics": {
+      "displayName": "Electronics",
+      "emoji": "💻",
+      "items": [
+        {
+          "id": "switch",
+          "name": "Switch", 
+          "model": "switch.glb",
+          "thumbnail": "switch.png",
+          "scale": 2,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "tags": ["switch", "console", "gaming", "controller"]
+        },
+        {
+          "id": "laptop",
+          "name": "Laptop",
+          "model": "laptop.glb",
+          "thumbnail": "laptop.png",
+          "scale": 3,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "tags": ["laptop", "computer", "portable"]
+        },
+        {
+          "id": "lamp",
+          "name": "Lamp",
+          "model": "lamp.glb",
+          "thumbnail": "lamp.png",
+          "scale": 2,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "hasLight": true,
+          "tags": ["lamp", "light", "desk", "lighting"]
+        },
+        {
+          "id": "monitor2",
+          "name": "Monitor 2",
+          "model": "monitor2.glb",
+          "thumbnail": "monitor2.png",
+          "fallbackEmoji": "🖥️",
+          "scale": 3,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "hangOnWall": true,
+          "tags": ["monitor", "screen", "display", "computer", "monitor2"]
+        },
+        {
+          "id": "computer",
+          "name": "Computer",
+          "model": "computer.glb",
+          "thumbnail": "computer.png",
+          "scale": 3,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "tags": ["computer", "screen", "display", "monitor", "desktop"]
+        },
+        {
+          "id": "keyboard",
+          "name": "Keyboard",
+          "model": "keyboard.glb",
+          "thumbnail": "keyboard.png",
+          "scale": 1.5,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "tags": ["keyboard", "typing", "input", "peripheral"]
+        },
+        {
+          "id": "speakers",
+          "name": "Speakers",
+          "model": "speaker.glb", 
+          "thumbnail": "speaker.png",
+          "scale": 3,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "tags": ["speakers", "audio", "sound", "music"]
+        }
+      ]
+    },
+    "storage": {
+      "displayName": "Storage",
+      "emoji": "🗄",
+      "items": [
+        {
+          "id": "cabinet",
+          "name": "Cabinet",
+          "model": "cabinet.glb",
+          "thumbnail": null,
+          "scale": 4,
+          "isSurface": true,
+          "placeOnSurface": false,
+          "tags": ["cabinet", "storage", "furniture", "wooden"]
+        },
+        {
+          "id": "bookshelf",
+          "name": "Bookshelf",
+          "model": "bookshelf.glb",
+          "thumbnail": "bookshelf.png",
+          "scale": 4,
+          "isSurface": true,
+          "placeOnSurface": false,
+          "tags": ["bookshelf", "shelves", "storage", "books"]
+        },
+        {
+          "id": "drawer",
+          "name": "Drawer Unit", 
+          "model": "drawer.glb",
+          "thumbnail": "drawer.png",
+          "scale": 3,
+          "isSurface": true,
+          "placeOnSurface": false,
+          "tags": ["drawer", "storage", "unit", "furniture"]
+        },
+        {
+          "id": "wardrobe",
+          "name": "Wardrobe",
+          "model": "wardrobe.glb",
+          "thumbnail": "wardrobe.png",
+          "scale": 5,
+          "isSurface": false,
+          "placeOnSurface": false,
+          "tags": ["wardrobe", "closet", "storage", "clothes"]
+        }
+      ]
+    },
+    "wall-decorations": {
+      "displayName": "Wall Decorations",
+      "emoji": "🖼️",
+      "items": [
+        {
+          "id": "picture1",
+          "name": "Picture Frame 1",
+          "model": "picture1.glb",
+          "thumbnail": "picture1.png",
+          "fallbackEmoji": "🖼️",
+          "scale": 2,
+          "isSurface": false,
+          "placeOnSurface": false,
+          "hangOnWall": true,
+          "tags": ["picture", "frame", "art", "decoration", "wall"]
+        },
+        {
+          "id": "mirror",
+          "name": "Mirror",
+          "model": "mirror.glb",
+          "thumbnail": "mirror.png",
+          "fallbackEmoji": "🪞",
+          "scale": 3,
+          "isSurface": false,
+          "placeOnSurface": false,
+          "hangOnWall": true,
+          "tags": ["mirror", "reflection", "wall", "decoration"]
+        },
+        {
+          "id": "clock",
+          "name": "Wall Clock",
+          "model": "clock.glb",
+          "thumbnail": "clock.png",
+          "fallbackEmoji": "🕐",
+          "scale": 2,
+          "isSurface": false,
+          "placeOnSurface": false,
+          "hangOnWall": true,
+          "tags": ["clock", "time", "wall", "decoration"]
+        }
+      ]
+    },
+    "accessories": {
+      "displayName": "Accessories",
+      "emoji": "☕",
+      "items": [
+        {
+          "id": "book",
+          "name": "Book",
+          "model": null,
+          "thumbnail": null,
+          "fallbackEmoji": "📚",
+          "scale": 1,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "tags": ["book", "reading", "literature"]
+        },
+        {
+          "id": "mug",
+          "name": "Mug",
+          "model": null,
+          "thumbnail": null,
+          "fallbackEmoji": "☕",
+          "scale": 1,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "tags": ["mug", "coffee", "tea", "cup"]
+        },
+        {
+          "id": "pillow1",
+          "name": "Pillow 1",
+          "model": "pillow1.glb",
+          "thumbnail": "pillow1.png",
+          "scale": 3,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "tags": ["pillow", "cushion", "comfort", "soft"]
+        },
+        {
+          "id": "pillow2",
+          "name": "Pillow 2",
+          "model": "pillow2.glb",
+          "thumbnail": "pillow2.png",
+          "scale": 3,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "tags": ["pillow", "cushion", "comfort", "soft"]
+        },
+        {
+          "id": "pillow3",
+          "name": "Pillow 3",
+          "model": "pillow3.glb",
+          "thumbnail": "pillow3.png",
+          "scale": 3,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "tags": ["pillow", "cushion", "comfort", "soft"]
+        },
+        {
+          "id": "pillow4",
+          "name": "Pillow 4",
+          "model": "pillow4.glb",
+          "thumbnail": "pillow4.png",
+          "scale": 3,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "tags": ["pillow", "cushion", "comfort", "soft"]
+        },
+        {
+          "id": "pillow5",
+          "name": "Pillow 5",
+          "model": "pillow5.glb",
+          "thumbnail": "pillow5.png",
+          "scale": 3,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "tags": ["pillow", "cushion", "comfort", "soft"]
+        },
+        {
+          "id": "candle",
+          "name": "Candle",
+          "model": "candle.glb",
+          "thumbnail": "candle.png",
+          "scale": 1,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "hasLight": true,
+          "tags": ["candle", "light", "flame", "decoration"]
+        },
+        {
+          "id": "books",
+          "name": "Book Stack",
+          "model": "books.glb",
+          "thumbnail": "books.png",
+          "scale": 1.2,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "tags": ["books", "stack", "reading", "literature", "multiple"]
+        },
+        {
+          "id": "coffeemug",
+          "name": "Coffee Mug", 
+          "model": "coffeemug.glb",
+          "thumbnail": "coffeemug.png",
+          "scale": 1,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "tags": ["coffee", "mug", "cup", "hot", "drink"]
+        }
+      ]
+    }
+  },
+  "autoDiscovery": {
+    "enabled": true,
+    "patterns": {
+      "numbered": [
+        "desk", "chair", "plant", "pillow",
+        "switch", "monitor", "lamp", "keyboard",
+        "mouse", "speaker", "vase", "statue", 
+        "artwork", "book", "mug", "candle",
+        "computer", "laptop", "tablet", "phone",
+        "clock", "frame", "bottle", "jar",
+        "box", "container", "decoration", "ornament",
+        "picture", "mirror", "painting", "poster"
+      ],
+      "maxVariants": 99
+    },
+    "defaultScale": 3,
+    "defaultTags": ["furniture"],
+    "categoryMapping": {
+      "desk": "desks",
+      "chair": "chairs", 
+      "plant": "plants",
+      "pillow": "accessories",
+      "switch": "electronics",
+      "monitor": "electronics",
+      "lamp": "accessories",
+      "keyboard": "electronics",
+      "mouse": "electronics",
+      "speaker": "electronics",
+      "vase": "accessories",
+      "statue": "accessories",
+      "artwork": "accessories",
+      "book": "accessories",
+      "mug": "accessories",
+      "candle": "accessories",
+      "computer": "electronics",
+      "laptop": "electronics",
+      "tablet": "electronics",
+      "phone": "electronics",
+      "clock": "accessories",
+      "frame": "accessories",
+      "bottle": "accessories",
+      "jar": "accessories",
+      "box": "storage",
+      "container": "storage",
+      "decoration": "accessories",
+      "ornament": "accessories",
+      "picture": "wall-decorations",
+      "mirror": "wall-decorations",
+      "painting": "wall-decorations",
+      "poster": "wall-decorations",
+      "clock": "wall-decorations",
+      "frame": "wall-decorations"
+    }
+  }
+}

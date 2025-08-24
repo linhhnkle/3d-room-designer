@@ -1,0 +1,16 @@
+{
+  "name": "desk-designer",
+  "version": "1.0.0",
+  "description": "3D Room Designer with keyboard customization",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel"
+  },
+  "keywords": ["3D", "room-designer", "three.js", "furniture"],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.x"
+  }
+}

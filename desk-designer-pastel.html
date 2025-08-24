@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Designer - Pastel Edition</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #canvas-container {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Bottom Control Bar */
+        .bottom-controls {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(20px);
+            padding: 8px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .control-btn {
+            width: 45px;
+            height: 45px;
+            border: none;
+            background: rgba(255, 255, 255, 0.5);
+            color: #8b6f47;
+            border-radius: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.8);
+            transform: translateY(-2px);
+        }
+
+        .control-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Loading */
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #8b6f47;
+            font-size: 14px;
+            display: none;
+        }
+
+        /* Instructions */
+        .instructions {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 10px 15px;
+            border-radius: 15px;
+            font-size: 12px;
+            color: #8b6f47;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        /* Object Toolbar */
+        .object-toolbar {
+            position: absolute;
+            display: flex;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            padding: 5px;
+            border-radius: 15px;
+            pointer-events: none;
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .object-toolbar.visible {
+            pointer-events: auto;
+        }
+
+        .toolbar-btn {
+            width: 35px;
+            height: 35px;
+            border: none;
+            background: rgba(255, 255, 255, 0.6);
+            color: #8b6f47;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.2s;
+            pointer-events: auto;
+        }
+
+        .toolbar-btn:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: scale(1.1);
+        }
+
+        .toolbar-btn.delete {
+            background: rgba(255, 182, 193, 0.6);
+            color: #8b4747;
+        }
+
+        .toolbar-btn.delete:hover {
+            background: rgba(255, 182, 193, 0.9);
+        }
+
+        /* Furniture Menu */
+        .furniture-menu {
+            position: absolute;
+            top: 80px;
+            left: 20px;
+            transform: none;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(255, 192, 203, 0.2);
+            z-index: 1000;
+            min-width: 400px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            color: #8b6f47;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: rgba(255, 255, 255, 0.5);
+            border: none;
+            color: #8b6f47;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            border-radius: 10px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .menu-item {
+            background: rgba(255, 255, 255, 0.6);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            box-shadow: 0 2px 8px rgba(255, 192, 203, 0.1);
+            width: 90px;
+            height: 90px;
+        }
+
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(255, 192, 203, 0.3);
+        }
+
+        .item-icon {
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            font-size: 32px;
+        }
+
+        .item-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: sepia(20%) saturate(0.8);
+        }
+
+        .item-name {
+            font-size: 9px;
+            color: #8b6f47;
+            font-weight: 500;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container">
+        <!-- Loading indicator -->
+        <div class="loading" id="loading">Loading...</div>
+
+        <!-- Furniture Menu -->
+        <div class="furniture-menu" id="furnitureMenu" style="display: block;">
+            <div class="menu-header">
+                <span>Add Furniture</span>
+                <button class="close-btn" onclick="app.toggleFurnitureMenu()">✕</button>
+            </div>
+            <div class="menu-grid">
+                <div class="menu-item" onclick="app.addModel('desk')">
+                    <div class="item-icon">
+                        <img src="Thumbnails/desk1.png" alt="Desk" onerror="this.style.display='none'; this.parentElement.innerHTML='🪑';">
+                    </div>
+                    <span class="item-name">Desk</span>
+                </div>
+                <div class="menu-item" onclick="app.addModel('chair')">
+                   <div class="item-icon">
+                        <img src="Thumbnails/chair.png" alt="Chair" onerror="this.style.display='none'; this.parentElement.innerHTML='🪑';">
+                    </div>
+                    <span class="item-name">Chair</span>
+                </div>
+                <div class="menu-item" onclick="app.addModel('sofa')">
+                    <span class="item-icon">🛋️</span>
+                    <span class="item-name">Sofa</span>
+                </div>
+                <div class="menu-item" onclick="app.addModel('lamp')">
+                    <span class="item-icon">💡</span>
+                    <span class="item-name">Lamp</span>
+                </div>
+                <div class="menu-item" onclick="app.addModel('monitor')">
+                    <span class="item-icon">🖥️</span>
+                    <span class="item-name">Monitor</span>
+                </div>
+                <div class="menu-item" onclick="app.addModel('plant')">
+                    <div class="item-icon">
+                        <img src="Thumbnails/plant1.png" alt="Plant" onerror="this.style.display='none'; this.parentElement.innerHTML='🌿';">
+                    </div>
+                    <span class="item-name">Plant</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructions -->
+        <div class="instructions">
+            Click to select • Drag to rotate view • Scroll to zoom
+        </div>
+
+        <!-- Bottom Controls -->
+        <div class="bottom-controls">
+            <button class="control-btn" onclick="app.rotateCamera('left')" title="Rotate Left">↶</button>
+            <button class="control-btn" onclick="app.toggleFurnitureMenu()" title="Add Furniture">➕</button>
+            <button class="control-btn" onclick="app.toggleTimeOfDay()" title="Time of Day">☀️</button>
+            <button class="control-btn" onclick="app.resetScene()" title="Reset">🔄</button>
+        </div>
+
+        <!-- Object Toolbar -->
+        <div class="object-toolbar" id="objectToolbar" style="display: none;">
+            <button class="toolbar-btn" onclick="app.scaleDown()" title="Scale Down">➖</button>
+            <button class="toolbar-btn" onclick="app.scaleUp()" title="Scale Up">➕</button>
+            <button class="toolbar-btn" onclick="app.duplicateSelected()" title="Duplicate">📋</button>
+            <button class="toolbar-btn" onclick="app.rotateSelected()" title="Rotate 45°">🔄</button>
+            <button class="toolbar-btn delete" onclick="app.deleteSelected()" title="Delete">🗑️</button>
+        </div>
+    </div>
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    
+    <script>
+        class RoomDesigner {
+            constructor() {
+                this.scene = null;
+                this.camera = null;
+                this.renderer = null;
+                this.raycaster = new THREE.Raycaster();
+                this.mouse = new THREE.Vector2();
+                
+                this.selectedObject = null;
+                this.objects = [];
+                this.selectableObjects = [];
+                this.gltfCache = new Map();
+                
+                // Time of day
+                this.timeOfDay = 'morning'; // morning, noon, evening
+                
+                // Dragging states
+                this.isDragging = false;
+                this.isRotating = false;
+                this.previousMousePosition = { x: 0, y: 0 };
+                this.draggedObject = null;
+                this.dragPlane = null;
+                this.dragOffset = null;
+                
+                // Camera state
+                this.cameraRotation = 0;
+                this.orthoSize = 12;
+                
+                // Performance
+                this.needsRender = true;
+                this.renderRequested = false;
+                
+                // Lights
+                this.sunLight = null;
+                this.fillLight = null;
+                this.rimLight = null;
+                this.ambientLight = null;
+                
+                this.init();
+            }
+
+            init() {
+                this.setupScene();
+                this.setupLights();
+                this.setupRoom();
+                this.setupControls();
+                this.animate();
+            }
+
+            setupScene() {
+                // Scene with original soft pastel background
+                this.scene = new THREE.Scene();
+                this.scene.background = new THREE.Color(0xd4b5a0); // Original soft peach from desk-designer.html
+                
+                // Minimal fog for clear details
+                this.scene.fog = new THREE.FogExp2(0xd4b5a0, 0.008); // Very light fog
+                
+                const canvasContainer = document.getElementById('canvas-container');
+                const width = canvasContainer.clientWidth;
+                const height = canvasContainer.clientHeight;
+                const aspect = width / height;
+                
+                // Orthographic camera
+                this.camera = new THREE.OrthographicCamera(
+                    -this.orthoSize * aspect, this.orthoSize * aspect,
+                    this.orthoSize, -this.orthoSize,
+                    0.1, 100
+                );
+                
+                this.camera.position.set(12, 12, 12);
+                this.camera.lookAt(0, 2, 0);
+                
+                // Renderer setup
+                this.renderer = new THREE.WebGLRenderer({ 
+                    antialias: true,
+                    alpha: false,
+                    powerPreference: "high-performance"
+                });
+                
+                this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                this.renderer.setSize(width, height);
+                
+                // Soft shadows
+                this.renderer.shadowMap.enabled = true;
+                this.renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Softest shadows
+                
+                // Balanced color management for soft pastels
+                this.renderer.toneMapping = THREE.ReinhardToneMapping; // Good for pastel colors
+                this.renderer.toneMappingExposure = 0.9; // Balanced exposure
+                this.renderer.outputEncoding = THREE.sRGBEncoding;
+                
+                // Gamma for softer colors
+                this.renderer.gammaFactor = 2.2;
+                
+                canvasContainer.appendChild(this.renderer.domElement);
+                window.addEventListener('resize', () => this.onWindowResize());
+            }
+
+            setupLights() {
+                // Balanced ambient light for soft pastels
+                this.ambientLight = new THREE.AmbientLight(0xfff5ee, 0.25); // Soft cream ambient
+                this.scene.add(this.ambientLight);
+                
+                // Warm directional light with good balance
+                this.sunLight = new THREE.DirectionalLight(0xffcc99, 0.6); // Softer warm light
+                this.sunLight.position.set(-8, 10, 8); // From corner window
+                this.sunLight.castShadow = true;
+                
+                // Very soft shadow settings
+                this.sunLight.shadow.mapSize.width = 2048; // High quality shadows
+                this.sunLight.shadow.mapSize.height = 2048;
+                this.sunLight.shadow.camera.near = 0.5;
+                this.sunLight.shadow.camera.far = 50;
+                
+                // Larger shadow camera for longer shadows
+                const shadowSize = 15;
+                this.sunLight.shadow.camera.left = -shadowSize;
+                this.sunLight.shadow.camera.right = shadowSize;
+                this.sunLight.shadow.camera.top = shadowSize;
+                this.sunLight.shadow.camera.bottom = -shadowSize;
+                
+                // Very soft shadow edges
+                this.sunLight.shadow.radius = 4; // Blur radius
+                this.sunLight.shadow.blurSamples = 25; // More samples for softer shadows
+                this.sunLight.shadow.bias = -0.0005;
+                
+                this.scene.add(this.sunLight);
+                
+                // Very subtle rim light
+                this.rimLight = new THREE.DirectionalLight(0xff8866, 0.1); // Subtle warm rim
+                this.rimLight.position.set(10, 5, -10); // Opposite corner
+                this.scene.add(this.rimLight);
+                
+                // Minimal fill light for natural contrast
+                this.fillLight = new THREE.HemisphereLight(
+                    0xffd9b3, // Warm cream sky
+                    0x8b6f47, // Brown ground
+                    0.15 // Much lower
+                );
+                this.scene.add(this.fillLight);
+            }
+
+            setupRoom() {
+                const thickness = 1;
+                const roomSize = 12;
+                
+                // Original soft floor material
+                const floorMaterial = new THREE.MeshPhongMaterial({ 
+                    color: 0xcc9980, // Original soft peachy floor from desk-designer.html
+                    shininess: 2, // Slight natural sheen
+                    specular: 0x221100, // Subtle warm specular
+                    reflectivity: 0,
+                    flatShading: false
+                });
+                
+                const floorGeometry = new THREE.BoxGeometry(roomSize, thickness, roomSize);
+                const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+                floor.position.y = -thickness/2;
+                floor.receiveShadow = true;
+                floor.userData.isFloor = true;
+                this.scene.add(floor);
+
+                // Original soft wall material
+                const wallMaterial = new THREE.MeshPhongMaterial({ 
+                    color: 0x9090a0, // Original soft lavender-gray from desk-designer.html
+                    shininess: 0, // Matte walls
+                    specular: 0x000000, // No specular
+                    reflectivity: 0
+                });
+
+                const wallHeight = 8;
+                const halfRoom = roomSize / 2;
+
+                // Back wall
+                const backWall = new THREE.Mesh(
+                    new THREE.BoxGeometry(roomSize, wallHeight, thickness),
+                    wallMaterial
+                );
+                backWall.position.set(0, wallHeight/2, -halfRoom + thickness/2);
+                backWall.receiveShadow = true;
+                backWall.userData.isWall = true;
+                this.scene.add(backWall);
+
+                // Left wall
+                const leftWall = new THREE.Mesh(
+                    new THREE.BoxGeometry(thickness, wallHeight, roomSize - thickness),
+                    wallMaterial
+                );
+                leftWall.position.set(-halfRoom + thickness/2, wallHeight/2, thickness/2);
+                leftWall.receiveShadow = true;
+                leftWall.userData.isWall = true;
+                this.scene.add(leftWall);
+                
+                // Add a subtle window indication on left wall
+                const windowFrame = new THREE.Mesh(
+                    new THREE.BoxGeometry(0.1, 3, 3),
+                    new THREE.MeshPhongMaterial({ 
+                        color: 0xffffff, 
+                        emissive: 0xffd4a3,
+                        emissiveIntensity: 0.3,
+                        shininess: 0
+                    })
+                );
+                windowFrame.position.set(-halfRoom + 0.1, 4, -2);
+                this.scene.add(windowFrame);
+            }
+
+            // Custom material converter for matte/velvety look
+            convertToMatteMaterial(originalMaterial) {
+                const color = originalMaterial.color || new THREE.Color(0x808080);
+                
+                return new THREE.MeshPhongMaterial({
+                    color: color,
+                    shininess: 0, // No shine at all
+                    specular: 0x000000, // No specular highlights
+                    map: originalMaterial.map || null,
+                    reflectivity: 0,
+                    flatShading: false,
+                    // Add subtle color adjustments for pastel look
+                    emissive: color,
+                    emissiveIntensity: 0.05 // Very subtle self-illumination
+                });
+            }
+
+            setupControls() {
+                const canvas = this.renderer.domElement;
+                canvas.addEventListener('contextmenu', (e) => e.preventDefault());
+
+                canvas.addEventListener('mousedown', (e) => this.onMouseDown(e));
+                canvas.addEventListener('mousemove', (e) => this.onMouseMove(e));
+                canvas.addEventListener('mouseup', (e) => this.onMouseUp(e)); 
+                canvas.addEventListener('wheel', (e) => this.onMouseWheel(e));
+            }
+
+            onMouseDown(event) {
+                if (event.button === 2) {
+                    event.preventDefault();
+                    this.isDragging = true;
+                    this.previousMousePosition = {
+                        x: event.clientX,
+                        y: event.clientY
+                    };
+                } else if (event.button === 1) {
+                    event.preventDefault();
+                    if (this.selectedObject) {
+                        this.isRotating = true;
+                        this.previousMousePosition = {
+                            x: event.clientX,
+                            y: event.clientY
+                        };
+                    }
+                } else if (event.button === 0) {
+                    this.handleObjectInteraction(event);
+                }
+            }
+
+            onMouseMove(event) {
+                if (this.isDragging) {
+                    const deltaX = event.clientX - this.previousMousePosition.x;
+                    this.cameraRotation += deltaX * 0.003;
+                    this.cameraRotation = Math.max(-Math.PI/4, Math.min(Math.PI/4, this.cameraRotation));
+                    this.updateCameraPosition();
+                    this.previousMousePosition = {
+                        x: event.clientX,
+                        y: event.clientY
+                    };
+                    this.requestRender();
+                } else if (this.isRotating && this.selectedObject) {
+                    const deltaX = event.clientX - this.previousMousePosition.x;
+                    this.selectedObject.rotation.y += deltaX * 0.01;
+                    this.previousMousePosition = {
+                        x: event.clientX,
+                        y: event.clientY
+                    };
+                    this.requestRender();
+                } else if (this.draggedObject) {
+                    this.onObjectDrag(event);
+                    this.requestRender();
+                }
+            }
+
+            onMouseUp(event) {
+                if (!event || event.button === 2) {
+                    this.isDragging = false;
+                }
+                if (!event || event.button === 1) {
+                    this.isRotating = false;
+                }
+                if (!event || event.button === 0) {
+                    this.onObjectDragEnd();
+                }
+            }
+
+            handleObjectInteraction(event) {
+                const rect = this.renderer.domElement.getBoundingClientRect();
+                this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+                this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+                this.raycaster.setFromCamera(this.mouse, this.camera);
+                
+                const selectables = this.selectableObjects.filter(obj => 
+                    !obj.userData.isWall && !obj.userData.isFloor
+                );
+                
+                const intersects = this.raycaster.intersectObjects(selectables, false);
+
+                if (intersects.length > 0) {
+                    let object = intersects[0].object;
+                    
+                    if (object.userData.parentModel) {
+                        object = object.userData.parentModel;
+                    }
+                    
+                    while (object.parent && !this.objects.includes(object)) {
+                        object = object.parent;
+                    }
+                    
+                    this.selectObject(object);
+                    this.draggedObject = object;
+                    
+                    const planeY = 0;
+                    this.dragPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -planeY);
+                    
+                    const intersectPoint = new THREE.Vector3();
+                    this.raycaster.ray.intersectPlane(this.dragPlane, intersectPoint);
+                    
+                    this.dragOffset = new THREE.Vector3(
+                        object.position.x - intersectPoint.x,
+                        0,
+                        object.position.z - intersectPoint.z
+                    );
+                } else {
+                    this.selectObject(null);
+                }
+            }
+
+            onObjectDrag(event) {
+                if (this.draggedObject) {
+                    const rect = this.renderer.domElement.getBoundingClientRect();
+                    this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+                    this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+                    
+                    this.raycaster.setFromCamera(this.mouse, this.camera);
+                    const intersectPoint = new THREE.Vector3();
+                    this.raycaster.ray.intersectPlane(this.dragPlane, intersectPoint);
+                    
+                    this.draggedObject.position.x = intersectPoint.x + this.dragOffset.x;
+                    this.draggedObject.position.z = intersectPoint.z + this.dragOffset.z;
+                }
+            }
+
+            onObjectDragEnd() {
+                this.draggedObject = null;
+                this.dragPlane = null;
+                this.dragOffset = null;
+            }
+
+            onMouseWheel(event) {
+                event.preventDefault();
+                
+                const zoomSpeed = 0.001;
+                const factor = 1 + event.deltaY * zoomSpeed;
+                
+                this.orthoSize *= factor;
+                this.orthoSize = Math.max(5, Math.min(20, this.orthoSize));
+                
+                this.updateOrthographicBounds();
+                this.requestRender();
+            }
+
+            updateOrthographicBounds() {
+                const aspect = this.renderer.domElement.clientWidth / this.renderer.domElement.clientHeight;
+                
+                this.camera.left = -this.orthoSize * aspect;
+                this.camera.right = this.orthoSize * aspect;
+                this.camera.top = this.orthoSize;
+                this.camera.bottom = -this.orthoSize;
+                
+                this.camera.updateProjectionMatrix();
+            }
+
+            updateCameraPosition() {
+                const angle = Math.PI / 4 + this.cameraRotation;
+                const distance = 18;
+                const height = 12;
+                
+                const x = Math.sin(angle) * distance;
+                const z = Math.cos(angle) * distance;
+                
+                this.camera.position.set(x, height, z);
+                this.camera.lookAt(0, 2, 0);
+                this.camera.updateProjectionMatrix();
+            }
+
+            onWindowResize() {
+                const canvasContainer = document.getElementById('canvas-container');
+                const width = canvasContainer.clientWidth;
+                const height = canvasContainer.clientHeight;
+                
+                this.updateOrthographicBounds();
+                this.renderer.setSize(width, height);
+                this.requestRender();
+            }
+
+            loadGLTFModel(path, type) {
+                if (this.gltfCache.has(path)) {
+                    const cachedScene = this.gltfCache.get(path);
+                    this.createModelFromCachedScene(cachedScene, type);
+                    return;
+                }
+
+                const loader = new THREE.GLTFLoader();
+                const loadingEl = document.getElementById('loading');
+                if (loadingEl) {
+                    loadingEl.style.display = 'block';
+                }
+                
+                loader.load(
+                    path,
+                    (gltf) => {
+                        // Convert all materials to matte
+                        gltf.scene.traverse((child) => {
+                            if (child.isMesh && child.material) {
+                                child.material = this.convertToMatteMaterial(child.material);
+                            }
+                        });
+                        
+                        this.gltfCache.set(path, gltf.scene);
+                        this.createModelFromCachedScene(gltf.scene, type);
+                        
+                        if (loadingEl) {
+                            loadingEl.style.display = 'none';
+                        }
+                    },
+                    undefined,
+                    (error) => {
+                        console.error(`Error loading ${type}:`, error);
+                        if (loadingEl) {
+                            loadingEl.style.display = 'none';
+                        }
+                        this.addPrimitiveModel(type);
+                    }
+                );
+            }
+
+            createModelFromCachedScene(originalScene, type) {
+                const model = originalScene.clone();
+                
+                model.position.set(
+                    Math.random() * 6 - 3,
+                    0,
+                    Math.random() * 6 - 3
+                );
+                
+                const scale = 2;
+                model.scale.set(scale, scale, scale);
+                
+                model.traverse((child) => {
+                    if (child.isMesh) {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                        child.userData.parentModel = model;
+                        this.selectableObjects.push(child);
+                    }
+                });
+                
+                model.userData.type = type;
+                model.userData.isModel = true;
+                
+                this.scene.add(model);
+                this.objects.push(model);
+                this.selectObject(model);
+                this.requestRender();
+            }
+
+            addModel(type) {
+                const modelPaths = {
+                    desk: 'Furniture/desk1.glb',
+                    chair: 'Furniture/chair.glb',
+                    monitor: 'Furniture/monitor.glb',
+                    plant: 'Furniture/plant1.glb'
+                };
+                
+                if (modelPaths.hasOwnProperty(type) && modelPaths[type]) {
+                    this.loadGLTFModel(modelPaths[type], type);
+                } else {
+                    this.addPrimitiveModel(type);
+                }
+            }
+
+            addPrimitiveModel(type) {
+                let geometry, material;
+                
+                // All materials are matte with pastel colors
+                switch (type) {
+                    case 'desk':
+                        geometry = new THREE.BoxGeometry(6, 0.2, 3);
+                        material = new THREE.MeshPhongMaterial({ 
+                            color: 0xf4e4d4, // Cream
+                            shininess: 0,
+                            specular: 0x000000
+                        });
+                        break;
+                    case 'chair':
+                        geometry = new THREE.BoxGeometry(1.5, 2, 1.5);
+                        material = new THREE.MeshPhongMaterial({ 
+                            color: 0xffe0ec, // Soft pink
+                            shininess: 0,
+                            specular: 0x000000
+                        });
+                        break;
+                    case 'lamp':
+                        geometry = new THREE.ConeGeometry(0.5, 2, 8);
+                        material = new THREE.MeshPhongMaterial({ 
+                            color: 0xfff9e6, // Soft yellow
+                            emissive: 0xfff9e6,
+                            emissiveIntensity: 0.2,
+                            shininess: 0,
+                            specular: 0x000000
+                        });
+                        break;
+                    case 'monitor':
+                        geometry = new THREE.BoxGeometry(2, 1.5, 0.2);
+                        material = new THREE.MeshPhongMaterial({ 
+                            color: 0xe6e0ff, // Soft lavender
+                            shininess: 0,
+                            specular: 0x000000
+                        });
+                        break;
+                    case 'plant':
+                        geometry = new THREE.SphereGeometry(0.8, 8, 6);
+                        material = new THREE.MeshPhongMaterial({ 
+                            color: 0xd4f4dd, // Soft mint
+                            shininess: 0,
+                            specular: 0x000000
+                        });
+                        break;
+                    case 'sofa':
+                        geometry = new THREE.BoxGeometry(3, 1.5, 1.5);
+                        material = new THREE.MeshPhongMaterial({ 
+                            color: 0xffd6e0, // Soft coral
+                            shininess: 0,
+                            specular: 0x000000
+                        });
+                        break;
+                    default:
+                        geometry = new THREE.BoxGeometry(1, 1, 1);
+                        material = new THREE.MeshPhongMaterial({ 
+                            color: 0xf0f0f0,
+                            shininess: 0,
+                            specular: 0x000000
+                        });
+                }
+                
+                const mesh = new THREE.Mesh(geometry, material);
+                mesh.position.set(
+                    Math.random() * 6 - 3,
+                    type === 'lamp' ? 1 : 0.5,
+                    Math.random() * 6 - 3
+                );
+                
+                mesh.castShadow = true;
+                mesh.receiveShadow = true;
+                mesh.userData.type = type;
+                mesh.userData.isModel = true;
+                
+                this.scene.add(mesh);
+                this.objects.push(mesh);
+                this.selectableObjects.push(mesh);
+                this.selectObject(mesh);
+                this.requestRender();
+            }
+
+            selectObject(object) {
+                if (this.selectedObject) {
+                    if (this.selectedObject.userData.isModel) {
+                        this.selectedObject.traverse((child) => {
+                            if (child.isMesh && child.material) {
+                                if (child.material.emissive) {
+                                    child.material.emissive = new THREE.Color(0x000000);
+                                }
+                            }
+                        });
+                    } else if (this.selectedObject.material) {
+                        this.selectedObject.material.emissive = new THREE.Color(0x000000);
+                    }
+                }
+                
+                this.selectedObject = object;
+                const toolbar = document.getElementById('objectToolbar');
+                
+                if (object) {
+                    // Soft pink highlight for selected objects
+                    if (object.userData.isModel) {
+                        object.traverse((child) => {
+                            if (child.isMesh && child.material) {
+                                child.material = child.material.clone();
+                                child.material.emissive = new THREE.Color(0xffb6c1); // Light pink
+                                child.material.emissiveIntensity = 0.2;
+                            }
+                        });
+                    } else if (object.material) {
+                        object.material = object.material.clone();
+                        object.material.emissive = new THREE.Color(0xffb6c1); // Light pink
+                        object.material.emissiveIntensity = 0.2;
+                    }
+                    
+                    this.updateToolbarPosition();
+                    toolbar.style.display = 'flex';
+                } else {
+                    toolbar.style.display = 'none';
+                }
+                
+                this.requestRender();
+            }
+
+            updateToolbarPosition() {
+                if (!this.selectedObject) return;
+                
+                const toolbar = document.getElementById('objectToolbar');
+                const vector = new THREE.Vector3();
+                
+                this.selectedObject.getWorldPosition(vector);
+                vector.y += 3;
+                vector.project(this.camera);
+                
+                const canvas = this.renderer.domElement;
+                const x = (vector.x * 0.5 + 0.5) * canvas.width;
+                const y = (vector.y * -0.5 + 0.5) * canvas.height;
+                
+                toolbar.style.left = (x - toolbar.offsetWidth / 2) + 'px';
+                toolbar.style.top = (y - 60) + 'px';
+            }
+
+            duplicateSelected() {
+                if (!this.selectedObject) return;
+                
+                const clone = this.selectedObject.clone();
+                clone.position.x += 1;
+                clone.position.z += 1;
+                
+                if (clone.userData.isModel) {
+                    clone.traverse((child) => {
+                        if (child.isMesh) {
+                            child.userData.parentModel = clone;
+                            this.selectableObjects.push(child);
+                        }
+                    });
+                } else {
+                    this.selectableObjects.push(clone);
+                }
+                
+                this.scene.add(clone);
+                this.objects.push(clone);
+                this.selectObject(clone);
+                this.requestRender();
+            }
+
+            rotateSelected() {
+                if (!this.selectedObject) return;
+                this.selectedObject.rotation.y += Math.PI / 4;
+                this.requestRender();
+            }
+
+            scaleUp() {
+                if (!this.selectedObject) return;
+                let currentScale = this.selectedObject.scale.x;
+                let newScale = Math.min(currentScale * 1.1, 5);
+                this.selectedObject.scale.set(newScale, newScale, newScale);
+                this.requestRender();
+            }
+
+            scaleDown() {
+                if (!this.selectedObject) return;
+                let currentScale = this.selectedObject.scale.x;
+                let newScale = Math.max(currentScale * 0.9, 0.1);
+                this.selectedObject.scale.set(newScale, newScale, newScale);
+                this.requestRender();
+            }
+
+            deleteSelected() {
+                if (this.selectedObject) {
+                    this.selectedObject.traverse((child) => {
+                        if (child.isMesh) {
+                            const index = this.selectableObjects.indexOf(child);
+                            if (index > -1) {
+                                this.selectableObjects.splice(index, 1);
+                            }
+                            
+                            if (child.geometry) child.geometry.dispose();
+                            if (child.material) {
+                                if (Array.isArray(child.material)) {
+                                    child.material.forEach(mat => mat.dispose());
+                                } else {
+                                    child.material.dispose();
+                                }
+                            }
+                        }
+                    });
+                    
+                    const index = this.objects.indexOf(this.selectedObject);
+                    if (index > -1) {
+                        this.objects.splice(index, 1);
+                    }
+                    
+                    if (!this.selectedObject.userData.isModel) {
+                        const selectableIndex = this.selectableObjects.indexOf(this.selectedObject);
+                        if (selectableIndex > -1) {
+                            this.selectableObjects.splice(selectableIndex, 1);
+                        }
+                    }
+                    
+                    this.scene.remove(this.selectedObject);
+                    this.selectedObject = null;
+                    document.getElementById('objectToolbar').style.display = 'none';
+                    this.requestRender();
+                }
+            }
+
+            rotateCamera(direction) {
+                if (direction === 'left') {
+                    this.cameraRotation -= Math.PI / 8;
+                } else {
+                    this.cameraRotation += Math.PI / 8;
+                }
+                this.cameraRotation = Math.max(-Math.PI/4, Math.min(Math.PI/4, this.cameraRotation));
+                this.updateCameraPosition();
+                this.requestRender();
+            }
+
+            toggleTimeOfDay() {
+                const times = ['morning', 'noon', 'evening'];
+                const currentIndex = times.indexOf(this.timeOfDay);
+                this.timeOfDay = times[(currentIndex + 1) % times.length];
+                
+                switch(this.timeOfDay) {
+                    case 'morning':
+                        // Golden hour lighting with original soft colors
+                        this.scene.background = new THREE.Color(0xd4b5a0);
+                        this.scene.fog.color = new THREE.Color(0xd4b5a0);
+                        this.sunLight.color = new THREE.Color(0xffcc99); // Softer warm light
+                        this.sunLight.intensity = 0.6; // Balanced intensity
+                        this.ambientLight.intensity = 0.25; 
+                        this.rimLight.intensity = 0.1;
+                        this.renderer.toneMappingExposure = 0.9; // Slightly higher for soft look
+                        break;
+                    case 'noon':
+                        // Bright midday
+                        this.scene.background = new THREE.Color(0xffeedd);
+                        this.scene.fog.color = new THREE.Color(0xffeedd);
+                        this.sunLight.color = new THREE.Color(0xffe6cc);
+                        this.sunLight.intensity = 0.7;
+                        this.ambientLight.intensity = 0.5;
+                        this.rimLight.intensity = 0.1;
+                        this.renderer.toneMappingExposure = 1.3;
+                        break;
+                    case 'evening':
+                        // Sunset vibes
+                        this.scene.background = new THREE.Color(0xffc0cb);
+                        this.scene.fog.color = new THREE.Color(0xffc0cb);
+                        this.sunLight.color = new THREE.Color(0xff9966);
+                        this.sunLight.intensity = 0.2;
+                        this.ambientLight.intensity = 0.25;
+                        this.rimLight.intensity = 0.15;
+                        this.renderer.toneMappingExposure = 1.1;
+                        break;
+                }
+                
+                this.requestRender();
+            }
+
+            toggleFurnitureMenu() {
+                const menu = document.getElementById('furnitureMenu');
+                menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+            }
+
+            resetScene() {
+                // Clear all objects except room
+                const toRemove = [...this.objects];
+                toRemove.forEach(obj => {
+                    this.scene.remove(obj);
+                    obj.traverse((child) => {
+                        if (child.geometry) child.geometry.dispose();
+                        if (child.material) {
+                            if (Array.isArray(child.material)) {
+                                child.material.forEach(mat => mat.dispose());
+                            } else {
+                                child.material.dispose();
+                            }
+                        }
+                    });
+                });
+                
+                this.objects = [];
+                this.selectableObjects = [];
+                this.selectedObject = null;
+                document.getElementById('objectToolbar').style.display = 'none';
+                this.requestRender();
+            }
+
+            requestRender() {
+                this.needsRender = true;
+                if (!this.renderRequested) {
+                    this.renderRequested = true;
+                    requestAnimationFrame(() => this.render());
+                }
+            }
+
+            render() {
+                this.renderRequested = false;
+                
+                if (this.needsRender) {
+                    this.renderer.render(this.scene, this.camera);
+                    this.needsRender = false;
+                }
+            }
+
+            animate() {
+                requestAnimationFrame(() => this.animate());
+                
+                if (this.needsRender) {
+                    this.render();
+                }
+            }
+        }
+
+        // Initialize app
+        let app;
+        window.addEventListener('DOMContentLoaded', () => {
+            app = new RoomDesigner();
+        });
+    </script>
+</body>
+</html>
