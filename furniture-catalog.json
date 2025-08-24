@@ -7,7 +7,7 @@
         {
           "id": "desk1",
           "name": "Desk 1",
-          "model": "desk1.glb",
+          "model": "Desks/desk1.glb",
           "thumbnail": "desk1.png",
           "scale": 4,
           "isSurface": true,
@@ -17,8 +17,18 @@
         {
           "id": "desk2", 
           "name": "Desk 2",
-          "model": "desk2.glb",
+          "model": "Desks/desk2.glb",
           "thumbnail": "desk2.png",
+          "scale": 4,
+          "isSurface": true,
+          "placeOnSurface": false,
+          "tags": ["desk", "office", "furniture"]
+        },
+        {
+          "id": "desk3",
+          "name": "Desk 3",
+          "model": "Desks/desk3.glb",
+          "thumbnail": "desk3.png",
           "scale": 4,
           "isSurface": true,
           "placeOnSurface": false,
@@ -27,7 +37,7 @@
         {
           "id": "standingdesk",
           "name": "Standing Desk", 
-          "model": "standingdesk.glb",
+          "model": "Desks/standingdesk.glb",
           "thumbnail": "standingdesk.png",
           "scale": 4,
           "isSurface": true,
@@ -37,23 +47,13 @@
         {
           "id": "desk4",
           "name": "Desk 4",
-          "model": "desk4.glb", 
+          "model": "Desks/desk4.glb", 
           "thumbnail": "desk4.png",
           "scale": 4,
           "isSurface": true,
           "placeOnSurface": false,
           "tags": ["desk", "office", "furniture", "executive"]
         },
-        {
-          "id": "desk5",
-          "name": "Desk 5",
-          "model": "desk5.glb",
-          "thumbnail": "desk5.png", 
-          "scale": 4,
-          "isSurface": true,
-          "placeOnSurface": false,
-          "tags": ["desk", "office", "furniture", "corner"]
-        }
       ]
     },
     "chairs": {
@@ -63,7 +63,7 @@
         {
           "id": "chair1",
           "name": "Chair 1",
-          "model": "chair1.glb",
+          "model": "Chairs/chair1.glb",
           "thumbnail": "chair1.png",
           "scale": 4,
           "isSurface": true,
@@ -73,7 +73,7 @@
         {
           "id": "chair2",
           "name": "Chair 2", 
-          "model": "chair2.glb",
+          "model": "Chairs/chair2.glb",
           "thumbnail": "chair2.png",
           "scale": 4,
           "isSurface": true,
@@ -83,7 +83,7 @@
         {
           "id": "chair3",
           "name": "Chair 3",
-          "model": "chair3.glb",
+          "model": "Chairs/chair3.glb",
           "thumbnail": "chair3.png", 
           "scale": 4,
           "isSurface": true,
@@ -93,12 +93,22 @@
         {
           "id": "chair4",
           "name": "Chair 4",
-          "model": "chair4.glb",
+          "model": "Chairs/chair4.glb",
           "thumbnail": "chair4.png",
           "scale": 4,
           "isSurface": true,
           "placeOnSurface": false,
           "tags": ["chair", "seating", "executive"]
+        },
+        {
+          "id": "chair5",
+          "name": "Chair 5",
+          "model": "Chairs/chair5.glb",
+          "thumbnail": "chair5.png",
+          "scale": 4,
+          "isSurface": true,
+          "placeOnSurface": false,
+          "tags": ["chair", "seating"]
         }
       ]
     },
@@ -126,7 +136,7 @@
         {
           "id": "plant1",
           "name": "Plant 1",
-          "model": "plant1.glb",
+          "model": "Plants/plant1.glb",
           "thumbnail": "plant1.png",
           "scale": 3,
           "isSurface": false,
@@ -136,7 +146,7 @@
         {
           "id": "plant2",
           "name": "Plant 2",
-          "model": "plant2.glb", 
+          "model": "Plants/plant2.glb", 
           "thumbnail": "plant2.png",
           "scale": 3,
           "isSurface": false,
@@ -146,7 +156,7 @@
         {
           "id": "plant3",
           "name": "Plant 3",
-          "model": "plant3.glb",
+          "model": "Plants/plant3.glb",
           "thumbnail": "plant3.png",
           "scale": 3,
           "isSurface": false,
@@ -156,7 +166,7 @@
         {
           "id": "plant4",
           "name": "Plant 4", 
-          "model": "plant4.glb",
+          "model": "Plants/plant4.glb",
           "thumbnail": "plant4.png",
           "scale": 3,
           "isSurface": false,
@@ -164,19 +174,9 @@
           "tags": ["plant", "green", "nature", "monstera"]
         },
         {
-          "id": "plant5",
-          "name": "Plant 5",
-          "model": "plant5.glb",
-          "thumbnail": "plant5.png",
-          "scale": 3,
-          "isSurface": false,
-          "placeOnSurface": true,
-          "tags": ["plant", "green", "nature", "fern"]
-        },
-        {
           "id": "cactus",
           "name": "Cactus",
-          "model": "cactus.glb",
+          "model": "Plants/cactus.glb",
           "thumbnail": "cactus.png",
           "scale": 4,
           "isSurface": false,
@@ -192,7 +192,7 @@
         {
           "id": "monitorstand1",
           "name": "Monitor Stand 1",
-          "model": "monitorstand1.glb",
+          "model": "MonitorStands/monitorstand1.glb",
           "thumbnail": "monitorstand1.png",
           "scale": 3,
           "isSurface": false,
@@ -202,12 +202,22 @@
         {
           "id": "monitorstand2", 
           "name": "Monitor Stand 2",
-          "model": "monitorstand2.glb",
+          "model": "MonitorStands/monitorstand2.glb",
           "thumbnail": "monitorstand2.png",
           "scale": 3,
           "isSurface": false,
           "placeOnSurface": true,
           "tags": ["monitor", "stand", "support", "riser", "desk", "ergonomic"]
+        },
+        {
+          "id": "monitorstand3", 
+          "name": "Monitor Stand 3",
+          "model": "MonitorStands/monitorstand3.glb",
+          "thumbnail": "monitorstand3.png",
+          "scale": 3,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "tags": ["monitor", "stand", "support", "riser", "desk"]
         }
       ]
     },
@@ -218,7 +228,7 @@
         {
           "id": "switch",
           "name": "Switch", 
-          "model": "switch.glb",
+          "model": "Electronics/switch.glb",
           "thumbnail": "switch.png",
           "scale": 2,
           "isSurface": false,
@@ -228,7 +238,7 @@
         {
           "id": "laptop",
           "name": "Laptop",
-          "model": "laptop.glb",
+          "model": "Electronics/laptop.glb",
           "thumbnail": "laptop.png",
           "scale": 3,
           "isSurface": false,
@@ -249,7 +259,7 @@
         {
           "id": "monitor2",
           "name": "Monitor 2",
-          "model": "monitor2.glb",
+          "model": "Electronics/monitor2.glb",
           "thumbnail": "monitor2.png",
           "fallbackEmoji": "🖥️",
           "scale": 3,
@@ -261,7 +271,7 @@
         {
           "id": "computer",
           "name": "Computer",
-          "model": "computer.glb",
+          "model": "Electronics/computer.glb",
           "thumbnail": "computer.png",
           "scale": 3,
           "isSurface": false,
@@ -271,7 +281,7 @@
         {
           "id": "keyboard",
           "name": "Keyboard",
-          "model": "keyboard.glb",
+          "model": "keyboard1.glb",
           "thumbnail": "keyboard.png",
           "scale": 1.5,
           "isSurface": false,
@@ -281,12 +291,32 @@
         {
           "id": "speakers",
           "name": "Speakers",
-          "model": "speaker.glb", 
-          "thumbnail": "speaker.png",
+          "model": "Electronics/speakers.glb", 
+          "thumbnail": "speakers.png",
           "scale": 3,
           "isSurface": false,
           "placeOnSurface": true,
           "tags": ["speakers", "audio", "sound", "music"]
+        },
+        {
+          "id": "speakers2",
+          "name": "Speakers 2",
+          "model": "Electronics/speakers2.glb", 
+          "thumbnail": "speakers2.png",
+          "scale": 3,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "tags": ["speakers", "audio", "sound", "music"]
+        },
+        {
+          "id": "switch2",
+          "name": "Switch 2",
+          "model": "Electronics/switch2.glb", 
+          "thumbnail": "switch2.png",
+          "scale": 2,
+          "isSurface": false,
+          "placeOnSurface": true,
+          "tags": ["switch", "console", "gaming", "controller"]
         }
       ]
     },
@@ -297,7 +327,7 @@
         {
           "id": "cabinet",
           "name": "Cabinet",
-          "model": "cabinet.glb",
+          "model": "Storage/cabinet.glb",
           "thumbnail": null,
           "scale": 4,
           "isSurface": true,
@@ -305,35 +335,35 @@
           "tags": ["cabinet", "storage", "furniture", "wooden"]
         },
         {
-          "id": "bookshelf",
-          "name": "Bookshelf",
-          "model": "bookshelf.glb",
-          "thumbnail": "bookshelf.png",
+          "id": "cabinet2",
+          "name": "Cabinet 2",
+          "model": "Storage/cabinet2.glb",
+          "thumbnail": "cabinet2.png",
           "scale": 4,
           "isSurface": true,
           "placeOnSurface": false,
-          "tags": ["bookshelf", "shelves", "storage", "books"]
+          "tags": ["cabinet", "storage", "furniture", "wooden"]
         },
         {
-          "id": "drawer",
-          "name": "Drawer Unit", 
-          "model": "drawer.glb",
-          "thumbnail": "drawer.png",
-          "scale": 3,
+          "id": "cabinet3",
+          "name": "Cabinet 3",
+          "model": "Storage/cabinet3.glb",
+          "thumbnail": "cabinet3.png",
+          "scale": 4,
           "isSurface": true,
           "placeOnSurface": false,
-          "tags": ["drawer", "storage", "unit", "furniture"]
+          "tags": ["cabinet", "storage", "furniture", "wooden"]
         },
         {
-          "id": "wardrobe",
-          "name": "Wardrobe",
-          "model": "wardrobe.glb",
-          "thumbnail": "wardrobe.png",
-          "scale": 5,
-          "isSurface": false,
+          "id": "cabinet4",
+          "name": "Cabinet 4",
+          "model": "Storage/cabinet4.glb",
+          "thumbnail": "cabinet4.png",
+          "scale": 4,
+          "isSurface": true,
           "placeOnSurface": false,
-          "tags": ["wardrobe", "closet", "storage", "clothes"]
-        }
+          "tags": ["cabinet", "storage", "furniture", "wooden"]
+        },
       ]
     },
     "wall-decorations": {
@@ -415,75 +445,34 @@
           "tags": ["pillow", "cushion", "comfort", "soft"]
         },
         {
-          "id": "pillow2",
-          "name": "Pillow 2",
-          "model": "pillow2.glb",
-          "thumbnail": "pillow2.png",
-          "scale": 3,
+          "id": "book1",
+          "name": "Book 1",
+          "model": "book1.glb",
+          "thumbnail": "book1.png",
+          "scale": 2,
           "isSurface": false,
           "placeOnSurface": true,
-          "tags": ["pillow", "cushion", "comfort", "soft"]
+          "tags": ["book", "reading", "literature"]
         },
         {
-          "id": "pillow3",
-          "name": "Pillow 3",
-          "model": "pillow3.glb",
-          "thumbnail": "pillow3.png",
-          "scale": 3,
+          "id": "book2",
+          "name": "Book 2",
+          "model": "book2.glb",
+          "thumbnail": "book2.png",
+          "scale": 2,
           "isSurface": false,
           "placeOnSurface": true,
-          "tags": ["pillow", "cushion", "comfort", "soft"]
+          "tags": ["book", "reading", "literature"]
         },
         {
-          "id": "pillow4",
-          "name": "Pillow 4",
-          "model": "pillow4.glb",
-          "thumbnail": "pillow4.png",
-          "scale": 3,
+          "id": "headphones1",
+          "name": "Headphones",
+          "model": "headphones1.glb",
+          "thumbnail": "headphones1.png",
+          "scale": 2,
           "isSurface": false,
           "placeOnSurface": true,
-          "tags": ["pillow", "cushion", "comfort", "soft"]
-        },
-        {
-          "id": "pillow5",
-          "name": "Pillow 5",
-          "model": "pillow5.glb",
-          "thumbnail": "pillow5.png",
-          "scale": 3,
-          "isSurface": false,
-          "placeOnSurface": true,
-          "tags": ["pillow", "cushion", "comfort", "soft"]
-        },
-        {
-          "id": "candle",
-          "name": "Candle",
-          "model": "candle.glb",
-          "thumbnail": "candle.png",
-          "scale": 1,
-          "isSurface": false,
-          "placeOnSurface": true,
-          "hasLight": true,
-          "tags": ["candle", "light", "flame", "decoration"]
-        },
-        {
-          "id": "books",
-          "name": "Book Stack",
-          "model": "books.glb",
-          "thumbnail": "books.png",
-          "scale": 1.2,
-          "isSurface": false,
-          "placeOnSurface": true,
-          "tags": ["books", "stack", "reading", "literature", "multiple"]
-        },
-        {
-          "id": "coffeemug",
-          "name": "Coffee Mug", 
-          "model": "coffeemug.glb",
-          "thumbnail": "coffeemug.png",
-          "scale": 1,
-          "isSurface": false,
-          "placeOnSurface": true,
-          "tags": ["coffee", "mug", "cup", "hot", "drink"]
+          "tags": ["headphones", "audio", "music", "sound"]
         }
       ]
     }
