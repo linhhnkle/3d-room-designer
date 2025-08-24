@@ -4258,9 +4258,11 @@
 
             // Furniture Catalog System
             async loadFurnitureCatalog() {
-                // Try folder-based scanning first
+                // Try folder-based scanning first (only on localhost)
                 console.log('Attempting folder-based catalog scanning...');
-                const folderBasedCatalog = await this.scanFolderBasedCategories();
+                const folderBasedCatalog = (location.hostname === 'localhost' || location.hostname === '127.0.0.1') 
+                    ? await this.scanFolderBasedCategories() 
+                    : null;
                 
                 if (folderBasedCatalog && Object.keys(folderBasedCatalog.categories).length > 0) {
                     console.log('Using folder-based catalog:', folderBasedCatalog);
