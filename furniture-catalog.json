@@ -249,7 +249,7 @@
           "id": "lamp",
           "name": "Lamp",
           "model": "Electronics/lamp.glb",
-          "thumbnail": "lamp.png",
+          "thumbnail": "Electronics/lamp.png",
           "scale": 2,
           "isSurface": false,
           "placeOnSurface": true,
