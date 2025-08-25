@@ -1213,6 +1213,30 @@
                 this.init().catch(error => console.error('Initialization failed:', error));
             }
 
+            getBasePath() {
+                // Detect if we're on GitHub Pages and adjust paths accordingly
+                const hostname = location.hostname;
+                const pathname = location.pathname;
+                
+                // Check if we're on GitHub Pages
+                if (hostname === 'linhhnkle.github.io' || hostname.endsWith('.github.io')) {
+                    // Extract repository name from pathname
+                    const pathParts = pathname.split('/').filter(part => part);
+                    if (pathParts.length > 0) {
+                        return `/${pathParts[0]}/`;
+                    }
+                }
+                
+                // Default to root path for localhost or other deployments
+                return './';
+            }
+
+            getAssetPath(relativePath) {
+                // Convert relative asset paths to work with the current deployment
+                const basePath = this.getBasePath();
+                return basePath + relativePath;
+            }
+
             async init() {
                 this.setupScene();
                 this.setupLights();
@@ -2489,7 +2513,8 @@
                         const item = category.items.find(item => item.id === type);
                         if (item && item.model) {
                             // Use modelPath if available (folder-based), otherwise use standard path
-                            return item.modelPath || `Furniture/${item.model}`;
+                            const relativePath = item.modelPath || `Furniture/${item.model}`;
+                            return this.getAssetPath(relativePath);
                         }
                     }
                     
@@ -2498,7 +2523,7 @@
                     if (autoDiscovery && autoDiscovery.enabled) {
                         for (const pattern of autoDiscovery.patterns.numbered) {
                             if (type.match(new RegExp(`^${pattern}\\d+$`))) {
-                                return `Furniture/${type}.glb`;
+                                return this.getAssetPath(`Furniture/${type}.glb`);
                             }
                         }
                     }
@@ -2532,10 +2557,10 @@
                 
                 // Check for numbered variants (fallback)
                 if (type.match(/^(desk|chair|plant|pillow)\d+$/)) {
-                    return `Furniture/${type}.glb`;
+                    return this.getAssetPath(`Furniture/${type}.glb`);
                 }
                 
-                return basePaths[type];
+                return basePaths[type] ? this.getAssetPath(basePaths[type]) : null;
             }
 
             isSurface(type) {
@@ -2609,8 +2634,8 @@
                 for (const pattern of autoDiscovery.patterns.numbered) {
                     for (let i = 1; i <= autoDiscovery.maxVariants; i++) {
                         const modelId = `${pattern}${i}`;
-                        const modelPath = `Furniture/${modelId}.glb`;
-                        const thumbnailPath = `Thumbnails/${modelId}.png`;
+                        const modelPath = this.getAssetPath(`Furniture/${modelId}.glb`);
+                        const thumbnailPath = this.getAssetPath(`Thumbnails/${modelId}.png`);
 
                         // Check if this model already exists in catalog
                         const existsInCatalog = this.findItemInCatalog(modelId);
@@ -4323,7 +4348,7 @@
                 
                 // Fall back to JSON catalog + auto-discovery
                 try {
-                    const response = await fetch('furniture-catalog.json');
+                    const response = await fetch(this.getAssetPath('furniture-catalog.json'));
                     if (response.ok) {
                         this.furnitureCatalog = await response.json();
                         this.generateDynamicMenus();
@@ -4364,7 +4389,7 @@
                 // Fall back to JSON catalog
                 try {
                     console.log('Falling back to JSON catalog...');
-                    const response = await fetch('furniture-catalog.json');
+                    const response = await fetch(this.getAssetPath('furniture-catalog.json'));
                     if (!response.ok) {
                         throw new Error(`Failed to load catalog: ${response.status}`);
                     }
@@ -4474,8 +4499,8 @@
                 if (item.thumbnail) {
                     // Load existing thumbnail
                     const thumbnailPath = item.thumbnail.includes('/') ? 
-                        `Thumbnails/${item.thumbnail}` : 
-                        `Thumbnails/${item.thumbnail}`;
+                        this.getAssetPath(`Thumbnails/${item.thumbnail}`) : 
+                        this.getAssetPath(`Thumbnails/${item.thumbnail}`);
                     iconHTML = `
                         <div class="item-icon">
                             <img src="${thumbnailPath}" alt="${item.name}" 
