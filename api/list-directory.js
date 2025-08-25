@@ -25,8 +25,18 @@ export default function handler(req, res) {
     }
     
     try {
+        // Check if we're in a serverless environment (Vercel)
+        if (process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.FUNCTION_NAME) {
+            // In serverless environments, static files are not accessible via filesystem
+            // Return a response indicating folder scanning is not available
+            return res.status(503).json({ 
+                error: 'Folder scanning not available in serverless environment',
+                message: 'Using static catalog instead'
+            });
+        }
+        
         // Construct the full directory path
-        // In Vercel, we need to look in the project root
+        // This only works in local/traditional server environments
         const fullDirPath = path.join(process.cwd(), dir);
         
         // Read the directory

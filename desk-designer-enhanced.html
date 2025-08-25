@@ -2600,6 +2600,14 @@
             // New folder-based scanning system
             async scanFolderBasedCategories() {
                 try {
+                    // Skip folder-based scanning in production environments (Vercel, etc.)
+                    // Only use folder scanning on localhost
+                    const hostname = location.hostname;
+                    if (hostname !== 'localhost' && hostname !== '127.0.0.1') {
+                        console.log('Folder-based scanning disabled in production, using static catalog');
+                        return null;
+                    }
+
                     const response = await fetch('/api/list-directory/Furniture');
                     if (!response.ok) {
                         console.log('Folder-based scanning not available, using current system');
