@@ -35,6 +35,7 @@ export default function handler(req, res) {
                             !process.env.NODE_ENV || // Often undefined in serverless
                             process.env.LAMBDA_TASK_ROOT; // AWS Lambda indicator
         
+        
         if (isServerless) {
             // In serverless environments, static files are not accessible via filesystem
             // Return a response indicating folder scanning is not available

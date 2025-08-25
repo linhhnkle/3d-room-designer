@@ -26,7 +26,8 @@ The project is a **3D Room Designer** built with vanilla JavaScript and Three.js
 - **Main Applications**: 
   - `index.html` - GitHub Pages version
   - `desk-designer-enhanced.html` - Enhanced version served by local server
-  - `app.js` - Core Three.js application logic (isometric camera, object management)
+  - `desk-designer.html` - Alternative version with similar functionality
+  - **Note**: Each HTML file contains its own embedded RoomDesigner class implementation
 
 - **Dual Environment Support**:
   - **Static Hosting** (GitHub Pages): Uses `furniture-catalog.json` for furniture metadata

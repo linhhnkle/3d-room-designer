@@ -53,7 +53,7 @@
           "isSurface": true,
           "placeOnSurface": false,
           "tags": ["desk", "office", "furniture", "executive"]
-        },
+        }
       ]
     },
     "chairs": {
@@ -363,7 +363,7 @@
           "isSurface": true,
           "placeOnSurface": false,
           "tags": ["cabinet", "storage", "furniture", "wooden"]
-        },
+        }
       ]
     },
     "wall-decorations": {
