@@ -1,0 +1,10 @@
+{
+  "[project]/src/components/Canvas3D.tsx [app-client] (ecmascript, next/dynamic entry)": {
+    "id": "[project]/src/components/Canvas3D.tsx [app-client] (ecmascript, next/dynamic entry)",
+    "files": [
+      "static/chunks/node_modules_ff91c713._.js",
+      "static/chunks/src_components_1cf43cbe._.js",
+      "static/chunks/src_components_Canvas3D_tsx_69e9810d._.js"
+    ]
+  }
+}
