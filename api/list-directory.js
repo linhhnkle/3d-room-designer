@@ -25,8 +25,17 @@ export default function handler(req, res) {
     }
     
     try {
-        // Check if we're in a serverless environment (Vercel)
-        if (process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.FUNCTION_NAME) {
+        // Check if we're in a serverless environment (Vercel, Netlify, etc.)
+        // Vercel sets VERCEL=1, also check for other serverless indicators
+        const isServerless = process.env.VERCEL || 
+                            process.env.VERCEL_ENV || 
+                            process.env.AWS_LAMBDA_FUNCTION_NAME || 
+                            process.env.FUNCTION_NAME ||
+                            process.env.NETLIFY ||
+                            !process.env.NODE_ENV || // Often undefined in serverless
+                            process.env.LAMBDA_TASK_ROOT; // AWS Lambda indicator
+        
+        if (isServerless) {
             // In serverless environments, static files are not accessible via filesystem
             // Return a response indicating folder scanning is not available
             return res.status(503).json({ 
@@ -43,7 +52,11 @@ export default function handler(req, res) {
         fs.readdir(fullDirPath, { withFileTypes: true }, (error, entries) => {
             if (error) {
                 console.error('Directory read error:', error);
-                return res.status(404).json({ error: 'Directory not found' });
+                // If directory not found, likely in serverless environment - return fallback response
+                return res.status(503).json({ 
+                    error: 'Folder scanning not available in this environment',
+                    message: 'Using static catalog instead'
+                });
             }
             
             // Separate directories and files

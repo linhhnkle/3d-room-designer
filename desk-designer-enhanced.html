@@ -2616,6 +2616,12 @@
                     
                     const folderData = await response.json();
                     
+                    // Check if API returned serverless error
+                    if (folderData.error && folderData.message) {
+                        console.log('API returned:', folderData.message);
+                        return null;
+                    }
+                    
                     // If no subdirectories, use flat structure
                     if (folderData.directories.length === 0) {
                         console.log('No subdirectories found, using flat structure');
