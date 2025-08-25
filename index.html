@@ -642,11 +642,11 @@
             <!-- Main Categories Section -->
             <div class="menu-section active" id="mainSection">
                 <div class="menu-grid">
-                    <div class="category-item" onclick="app.showSection('desk')">
+                    <div class="category-item" onclick="app.showSection('desks')">
                         <span class="item-icon" style="font-size: 24px;">🪑</span>
                         <span class="item-name">Desk</span>
                     </div>
-                    <div class="category-item" onclick="app.showSection('chair')">
+                    <div class="category-item" onclick="app.showSection('chairs')">
                         <span class="item-icon" style="font-size: 24px;">🪑</span>
                         <span class="item-name">Chair</span>
                     </div>
@@ -674,7 +674,7 @@
                         <span class="item-icon" style="font-size: 24px;">🛋️</span>
                         <span class="item-name">Sofas</span>
                     </div>
-                    <div class="category-item" onclick="app.showSection('walldecorations')">
+                    <div class="category-item" onclick="app.showSection('wall-decorations')">
                         <span class="item-icon" style="font-size: 24px;">🖼️</span>
                         <span class="item-name">Wall Art</span>
                     </div>
@@ -3600,8 +3600,21 @@
                 sections.forEach(section => section.classList.remove('active'));
                 
                 // Show the requested section
-                const targetSection = sectionName === 'main' ? 'mainSection' : sectionName + 'Section';
-                document.getElementById(targetSection).classList.add('active');
+                let targetSection;
+                if (sectionName === 'main') {
+                    targetSection = 'mainSection';
+                } else if (sectionName === 'wall-decorations') {
+                    targetSection = 'walldecorationsSection';
+                } else {
+                    targetSection = sectionName + 'Section';
+                }
+                
+                const element = document.getElementById(targetSection);
+                if (element) {
+                    element.classList.add('active');
+                } else {
+                    console.warn(`Section not found: ${targetSection}`);
+                }
             }
 
             searchFurniture(query) {
@@ -4414,6 +4427,8 @@
                     'electronics': 'electronicsSection',
                     'storage': 'storageSection',
                     'accessories': 'accessoriesSection',
+                    'sofas': 'sofasSection',
+                    'wall-decorations': 'walldecorationsSection',
                     'misc': 'accessoriesSection'
                 };
                 
